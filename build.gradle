@@ -1,0 +1,29 @@
+plugins {
+    id 'java'
+}
+
+group 'org.example'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+jar {
+    manifest {
+        attributes 'Implementation-Title': 'Gradle Quickstart',
+                'Main-Class': 'ru.simple.Main'
+    }
+}
+
+task dockerBuild(type: Exec, dependsOn: jar) {
+    commandLine("docker", "build", "-t", "pr9", ".")
+}
+
+task run(dependsOn: dockerBuild, type: Exec) {
+    commandLine("docker", "run", "pr9")
+}
+
+dependencies {
+
+}
